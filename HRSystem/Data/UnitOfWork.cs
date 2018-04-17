@@ -15,9 +15,12 @@ namespace HRSystem.Data
         {
             this.context = context;
             Departments = new DepartmentRepository(this.context);
+            Projects = new ProjectRepository(this.context);
         }
 
         public IDepartmentRepository Departments { get; private set; }
+        public IProjectRepository Projects { get; private set; }
+
 
         public int Complete()
         {

@@ -10,112 +10,108 @@ using System.Web.Mvc;
 
 namespace HRSystem.Controllers
 {
-    public class DepartmentController : Controller
+    public class ProjectsController : Controller
     {
         private UnitOfWork unitOfWork = new UnitOfWork(new HRSystemEntities());
 
-        // GET: Department
+        // GET: Projects
         public ActionResult Index()
         {
-            
-            return View(unitOfWork.Departments.GetAll());
+            return View(unitOfWork.Projects.GetAll());
         }
 
-        // GET: Department/Details/5
+        // GET: Projects/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Department department = unitOfWork.Departments.SingleOrDefault(d => d.DepartmentId == id);
-            if (department == null)
+            Project project = unitOfWork.Projects.SingleOrDefault(p => p.ProjectId == id);
+            if (project == null)
             {
                 return HttpNotFound();
             }
-            return View(department);
+            return View(project);
         }
 
-        // GET: Department/Create
+        // GET: Projects/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Department/Create
+        // POST: Projects/Create
         // Aktivieren Sie zum Schutz vor übermäßigem Senden von Angriffen die spezifischen Eigenschaften, mit denen eine Bindung erfolgen soll. Weitere Informationen 
         // finden Sie unter https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "DepartmentId,Name,Description")] Department department)
+        public ActionResult Create([Bind(Include = "ProjectId,Name,Description")] Project project)
         {
             if (ModelState.IsValid)
             {
-                unitOfWork.Departments.Add(department);
+                unitOfWork.Projects.Add(project);
                 unitOfWork.Complete();
-
                 return RedirectToAction("Index");
             }
 
-            return View(department);
+            return View(project);
         }
 
-        // GET: Department/Edit/5
+        // GET: Projects/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Department department = unitOfWork.Departments.SingleOrDefault(d => d.DepartmentId == id);
-            if (department == null)
+            Project project = unitOfWork.Projects.SingleOrDefault(p => p.ProjectId == id);
+            if (project == null)
             {
                 return HttpNotFound();
             }
-            return View(department);
+            return View(project);
         }
 
-        // POST: Department/Edit/5
+        // POST: Projects/Edit/5
         // Aktivieren Sie zum Schutz vor übermäßigem Senden von Angriffen die spezifischen Eigenschaften, mit denen eine Bindung erfolgen soll. Weitere Informationen 
         // finden Sie unter https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "DepartmentId,Name,Description")] Department department)
+        public ActionResult Edit([Bind(Include = "ProjectId,Name,Description")] Project project)
         {
             if (ModelState.IsValid)
             {
-                unitOfWork.Departments.Update(department);
+                unitOfWork.Projects.Update(project);
                 unitOfWork.Complete();
-
                 return RedirectToAction("Index");
             }
-            return View(department);
+            return View(project);
         }
 
-        // GET: Department/Delete/5
+        // GET: Projects/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Department department = unitOfWork.Departments.SingleOrDefault(d => d.DepartmentId == id);
-            if (department == null)
+            Project project = unitOfWork.Projects.SingleOrDefault(p => p.ProjectId == id);
+            if (project == null)
             {
                 return HttpNotFound();
             }
-            return View(department);
+            return View(project);
         }
 
-        // POST: Department/Delete/5
+        // POST: Projects/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Department department = unitOfWork.Departments.SingleOrDefault(d => d.DepartmentId == id);
-            unitOfWork.Departments.Remove(department);
+            Project project = unitOfWork.Projects.SingleOrDefault(p => p.ProjectId == id);
+            unitOfWork.Projects.Remove(project);
             unitOfWork.Complete();
-
             return RedirectToAction("Index");
         }
 
