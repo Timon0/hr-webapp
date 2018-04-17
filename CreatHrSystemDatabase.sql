@@ -27,11 +27,11 @@ CREATE TABLE Employee (
 	Firstname VARCHAR(100) NOT NULL,
 	Lastname VARCHAR(100) NOT NULL,
 	Birthday date NOT NULL,
-	BossId INT NULL,
 	Salary INT NULL,
 	[Address] VARCHAR(200) NULL,
 	FkDepartment INT FOREIGN KEY REFERENCES Department(DepartmentId) NOT NULL,
 	FkPlace INT FOREIGN KEY REFERENCES PLACE(PlaceId) NOT NULL,
+	FkBoss INT FOREIGN KEY REFERENCES Employee(EmployeeId) NULL,
 )
 
 CREATE TABLE EmployeeProject (
@@ -60,7 +60,7 @@ INSERT INTO Place (PostalCode, Place)
 		(6030, 'Ebikon'),
 		(6000, 'Luzern');
 
-INSERT INTO Employee(Firstname, Lastname, Birthday, BossId, Salary, Address, FkDepartment, FkPlace)
+INSERT INTO Employee(Firstname, Lastname, Birthday, FkBoss, Salary, Address, FkDepartment, FkPlace)
 	VALUES 
 		('Timon', 'Kurmann', '2000-03-01', NULL, 5500, 'Sonnhaldenstr. 78', 1, 3),
 		('Steven', 'Würsch', '2000-06-30', '1', 6500, 'Weidli 3', 1, 1),
