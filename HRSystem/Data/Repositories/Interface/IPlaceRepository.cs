@@ -6,7 +6,7 @@ using System.Web;
 
 namespace HRSystem.Data.Repositories.Interface
 {
-    public interface IDepartmentRepository : IRepository<Department>
+    public interface IPlaceRepository : IRepository<Place>
     {
     }
 }

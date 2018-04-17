@@ -149,51 +149,53 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Data\IUnitOfWork.cs" />
     <Compile Include="Data\Repositories\Implementation\DepartmentRepository.cs" />
+    <Compile Include="Data\Repositories\Implementation\EmployeeRepository.cs" />
+    <Compile Include="Data\Repositories\Implementation\PlaceRepository.cs" />
     <Compile Include="Data\Repositories\Implementation\ProjectRepository.cs" />
     <Compile Include="Data\Repositories\Implementation\Repository.cs" />
     <Compile Include="Data\Repositories\Interface\IDepartmentRepository.cs" />
+    <Compile Include="Data\Repositories\Interface\IEmployeeRepository.cs" />
+    <Compile Include="Data\Repositories\Interface\IPlaceRepository.cs" />
     <Compile Include="Data\Repositories\Interface\IProjectRepository.cs" />
     <Compile Include="Data\Repositories\Interface\IRepository.cs" />
     <Compile Include="Data\UnitOfWork.cs" />
-    <Compile Include="Department.cs">
-      <DependentUpon>HRSystemModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Controllers\DepartmentController.cs" />
-    <Compile Include="Employee.cs">
-      <DependentUpon>HRSystemModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="HRSystemModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>HRSystemModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="HRSystemModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>HRSystemModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="HRSystemModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>HRSystemModel.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Place.cs">
-      <DependentUpon>HRSystemModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Project.cs">
-      <DependentUpon>HRSystemModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Controllers\ProjectsController.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="sysdiagrams.cs">
-      <DependentUpon>HRSystemModel.tt</DependentUpon>
+    <Compile Include="Models\Department.cs">
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Employee.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Model.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Model.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Model.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Place.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Project.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -202,27 +204,27 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="HRSystemModel.Context.tt">
+    <Content Include="Models\Model.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>HRSystemModel.Context.cs</LastGenOutput>
-      <DependentUpon>HRSystemModel.edmx</DependentUpon>
+      <DependentUpon>Model.edmx</DependentUpon>
+      <LastGenOutput>Model.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="HRSystemModel.tt">
+    <Content Include="Models\Model.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>HRSystemModel.edmx</DependentUpon>
-      <LastGenOutput>HRSystemModel.cs</LastGenOutput>
+      <DependentUpon>Model.edmx</DependentUpon>
+      <LastGenOutput>Model.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <EntityDeploy Include="HRSystemModel.edmx">
+    <EntityDeploy Include="Models\Model.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>HRSystemModel.Designer.cs</LastGenOutput>
+      <LastGenOutput>Model.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="HRSystemModel.edmx.diagram">
-      <DependentUpon>HRSystemModel.edmx</DependentUpon>
+    <Content Include="Models\Model.edmx.diagram">
+      <DependentUpon>Model.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -259,10 +261,14 @@
     <Content Include="Views\Projects\Details.cshtml" />
     <Content Include="Views\Projects\Edit.cshtml" />
     <Content Include="Views\Projects\Index.cshtml" />
+    <Content Include="Views\Employees\Create.cshtml" />
+    <Content Include="Views\Employees\Delete.cshtml" />
+    <Content Include="Views\Employees\Details.cshtml" />
+    <Content Include="Views\Employees\Edit.cshtml" />
+    <Content Include="Views\Employees\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

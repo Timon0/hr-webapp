@@ -7,9 +7,9 @@ using System.Web;
 
 namespace HRSystem.Data.Repositories.Implementation
 {
-    public class DepartmentRepository : Repository<Department>, IDepartmentRepository
+    public class PlaceRepository : Repository<Place>, IPlaceRepository
     {
-        public DepartmentRepository(HRSystemEntities context) : base(context)
+        public PlaceRepository(HRSystemEntities context) : base(context)
         {
         }
     }

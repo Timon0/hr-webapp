@@ -9,6 +9,10 @@ namespace HRSystem.Data
     public interface IUnitOfWork : IDisposable
     {
         IDepartmentRepository Departments { get; }
+        IEmployeeRepository Employees { get; }
+        IProjectRepository Projects { get; }
+        IPlaceRepository Places { get; }
+
         int Complete();
     }
 }

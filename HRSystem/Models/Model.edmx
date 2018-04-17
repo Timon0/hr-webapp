@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="HRSystemModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Department">
           <Key>
             <PropertyRef Name="DepartmentId" />
@@ -21,11 +21,11 @@
           <Property Name="Firstname" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Lastname" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Birthday" Type="date" Nullable="false" />
-          <Property Name="BossId" Type="int" />
           <Property Name="Salary" Type="int" />
           <Property Name="Address" Type="varchar" MaxLength="200" />
           <Property Name="FkDepartment" Type="int" Nullable="false" />
           <Property Name="FkPlace" Type="int" Nullable="false" />
+          <Property Name="FkBoss" Type="int" />
         </EntityType>
         <EntityType Name="EmployeeProject">
           <Key>
@@ -51,16 +51,18 @@
           <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Description" Type="varchar" MaxLength="200" Nullable="false" />
         </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
-        </EntityType>
+        <Association Name="FK__Employee__FkBoss__2B3F6F97">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="Employee1" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="Employee1">
+              <PropertyRef Name="FkBoss" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Employee__FkDepa__29572725">
           <End Role="Department" Type="Self.Department" Multiplicity="1" />
           <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
@@ -85,7 +87,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__EmployeeP__Emplo__2E1BDC42">
+        <Association Name="FK__EmployeeP__Emplo__2F10007B">
           <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
           <End Role="EmployeeProject" Type="Self.EmployeeProject" Multiplicity="*" />
           <ReferentialConstraint>
@@ -97,7 +99,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__EmployeeP__Proje__2D27B809">
+        <Association Name="FK__EmployeeP__Proje__2E1BDC42">
           <End Role="Project" Type="Self.Project" Multiplicity="1" />
           <End Role="EmployeeProject" Type="Self.EmployeeProject" Multiplicity="*" />
           <ReferentialConstraint>
@@ -109,13 +111,16 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="ModelStoreContainer">
+        <EntityContainer Name="HRSystemModelStoreContainer">
           <EntitySet Name="Department" EntityType="Self.Department" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmployeeProject" EntityType="Self.EmployeeProject" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Place" EntityType="Self.Place" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Project" EntityType="Self.Project" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Employee__FkBoss__2B3F6F97" Association="Self.FK__Employee__FkBoss__2B3F6F97">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Employee1" EntitySet="Employee" />
+          </AssociationSet>
           <AssociationSet Name="FK__Employee__FkDepa__29572725" Association="Self.FK__Employee__FkDepa__29572725">
             <End Role="Department" EntitySet="Department" />
             <End Role="Employee" EntitySet="Employee" />
@@ -124,11 +129,11 @@
             <End Role="Place" EntitySet="Place" />
             <End Role="Employee" EntitySet="Employee" />
           </AssociationSet>
-          <AssociationSet Name="FK__EmployeeP__Emplo__2E1BDC42" Association="Self.FK__EmployeeP__Emplo__2E1BDC42">
+          <AssociationSet Name="FK__EmployeeP__Emplo__2F10007B" Association="Self.FK__EmployeeP__Emplo__2F10007B">
             <End Role="Employee" EntitySet="Employee" />
             <End Role="EmployeeProject" EntitySet="EmployeeProject" />
           </AssociationSet>
-          <AssociationSet Name="FK__EmployeeP__Proje__2D27B809" Association="Self.FK__EmployeeP__Proje__2D27B809">
+          <AssociationSet Name="FK__EmployeeP__Proje__2E1BDC42" Association="Self.FK__EmployeeP__Proje__2E1BDC42">
             <End Role="Project" EntitySet="Project" />
             <End Role="EmployeeProject" EntitySet="EmployeeProject" />
           </AssociationSet>
@@ -137,7 +142,7 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="HRSystemModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Department">
           <Key>
             <PropertyRef Name="DepartmentId" />
@@ -155,12 +160,14 @@
           <Property Name="Firstname" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Lastname" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Birthday" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="BossId" Type="Int32" />
           <Property Name="Salary" Type="Int32" />
           <Property Name="Address" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="FkDepartment" Type="Int32" Nullable="false" />
           <Property Name="FkPlace" Type="Int32" Nullable="false" />
+          <Property Name="FkBoss" Type="Int32" />
           <NavigationProperty Name="Department" Relationship="Self.FK__Employee__FkDepa__29572725" FromRole="Employee" ToRole="Department" />
+          <NavigationProperty Name="Employee1" Relationship="Self.FK__Employee__FkBoss__2B3F6F97" FromRole="Employee" ToRole="Employee1" />
+          <NavigationProperty Name="Employee2" Relationship="Self.FK__Employee__FkBoss__2B3F6F97" FromRole="Employee1" ToRole="Employee" />
           <NavigationProperty Name="Place" Relationship="Self.FK__Employee__FkPlac__2A4B4B5E" FromRole="Employee" ToRole="Place" />
           <NavigationProperty Name="Project" Relationship="Self.EmployeeProject" FromRole="Employee" ToRole="Project" />
         </EntityType>
@@ -182,16 +189,6 @@
           <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Employee" Relationship="Self.EmployeeProject" FromRole="Project" ToRole="Employee" />
         </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-        </EntityType>
         <Association Name="FK__Employee__FkDepa__29572725">
           <End Role="Department" Type="Self.Department" Multiplicity="1" />
           <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
@@ -201,6 +198,18 @@
             </Principal>
             <Dependent Role="Employee">
               <PropertyRef Name="FkDepartment" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Employee__FkBoss__2B3F6F97">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="Employee1" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="Employee1">
+              <PropertyRef Name="FkBoss" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -225,10 +234,13 @@
           <EntitySet Name="Employee" EntityType="Self.Employee" />
           <EntitySet Name="Place" EntityType="Self.Place" />
           <EntitySet Name="Project" EntityType="Self.Project" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
           <AssociationSet Name="FK__Employee__FkDepa__29572725" Association="Self.FK__Employee__FkDepa__29572725">
             <End Role="Department" EntitySet="Department" />
             <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Employee__FkBoss__2B3F6F97" Association="Self.FK__Employee__FkBoss__2B3F6F97">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Employee1" EntitySet="Employee" />
           </AssociationSet>
           <AssociationSet Name="FK__Employee__FkPlac__2A4B4B5E" Association="Self.FK__Employee__FkPlac__2A4B4B5E">
             <End Role="Place" EntitySet="Place" />
@@ -244,9 +256,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="HRSystemEntities">
+        <EntityContainerMapping StorageEntityContainer="HRSystemModelStoreContainer" CdmEntityContainer="HRSystemEntities">
           <EntitySetMapping Name="Department">
-            <EntityTypeMapping TypeName="Model.Department">
+            <EntityTypeMapping TypeName="HRSystemModel.Department">
               <MappingFragment StoreEntitySet="Department">
                 <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -255,22 +267,22 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Employee">
-            <EntityTypeMapping TypeName="Model.Employee">
+            <EntityTypeMapping TypeName="HRSystemModel.Employee">
               <MappingFragment StoreEntitySet="Employee">
                 <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
                 <ScalarProperty Name="Firstname" ColumnName="Firstname" />
                 <ScalarProperty Name="Lastname" ColumnName="Lastname" />
                 <ScalarProperty Name="Birthday" ColumnName="Birthday" />
-                <ScalarProperty Name="BossId" ColumnName="BossId" />
                 <ScalarProperty Name="Salary" ColumnName="Salary" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="FkDepartment" ColumnName="FkDepartment" />
                 <ScalarProperty Name="FkPlace" ColumnName="FkPlace" />
+                <ScalarProperty Name="FkBoss" ColumnName="FkBoss" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Place">
-            <EntityTypeMapping TypeName="Model.Place">
+            <EntityTypeMapping TypeName="HRSystemModel.Place">
               <MappingFragment StoreEntitySet="Place">
                 <ScalarProperty Name="PlaceId" ColumnName="PlaceId" />
                 <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
@@ -279,7 +291,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Project">
-            <EntityTypeMapping TypeName="Model.Project">
+            <EntityTypeMapping TypeName="HRSystemModel.Project">
               <MappingFragment StoreEntitySet="Project">
                 <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -287,18 +299,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="Model.sysdiagrams">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <AssociationSetMapping Name="EmployeeProject" TypeName="Model.EmployeeProject" StoreEntitySet="EmployeeProject">
+          <AssociationSetMapping Name="EmployeeProject" TypeName="HRSystemModel.EmployeeProject" StoreEntitySet="EmployeeProject">
             <EndProperty Name="Employee">
               <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
             </EndProperty>

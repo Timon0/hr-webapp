@@ -13,6 +13,7 @@
         <AssociationConnector Association="Model.FK__Employee__FkDepa__29572725" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK__Employee__FkPlac__2A4B4B5E" ManuallyRouted="false" />
         <AssociationConnector Association="Model.EmployeeProject" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK__Employee__FkBoss__2B3F6F97" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
