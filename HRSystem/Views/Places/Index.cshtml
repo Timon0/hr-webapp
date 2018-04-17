@@ -1,0 +1,39 @@
+﻿@model IEnumerable<HRSystem.Models.Place>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.PostalCode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Place1)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.PostalCode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Place1)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.PlaceId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.PlaceId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.PlaceId })
+        </td>
+    </tr>
+}
+
+</table>
