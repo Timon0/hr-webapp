@@ -58,7 +58,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.FkDepartment, "FkDepartment", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.FkDepartment, "Department", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("FkDepartment", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.FkDepartment, "", new { @class = "text-danger" })
@@ -66,7 +66,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.FkPlace, "FkPlace", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.FkPlace, "Place", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("FkPlace", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.FkPlace, "", new { @class = "text-danger" })
@@ -74,7 +74,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.FkBoss, "FkBoss", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.FkBoss, "Boss", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("FkBoss", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.FkBoss, "", new { @class = "text-danger" })

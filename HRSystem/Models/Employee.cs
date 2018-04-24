@@ -11,7 +11,8 @@ namespace HRSystem.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Employee
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -24,6 +25,9 @@ namespace HRSystem.Models
         public int EmployeeId { get; set; }
         public string Firstname { get; set; }
         public string Lastname { get; set; }
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public System.DateTime Birthday { get; set; }
         public Nullable<int> Salary { get; set; }
         public string Address { get; set; }
