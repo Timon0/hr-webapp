@@ -11,7 +11,7 @@ using System.Web.Mvc;
 
 namespace HRSystem.Controllers
 {
-    public class DepartmentController : Controller
+    public class DepartmentsController : Controller
     {
         private UnitOfWork unitOfWork = new UnitOfWork(new HRSystemEntities());
 
