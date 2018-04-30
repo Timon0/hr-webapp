@@ -1,4 +1,4 @@
-﻿@model IEnumerable<HRSystem.Models.Employee>
+﻿@model IEnumerable<HRSystem.Models.Dto.EmployeeDto>
 
 @{
     ViewBag.Title = "Index";
@@ -30,7 +30,7 @@
             @Html.DisplayNameFor(model => model.Department)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Employee2)
+            @Html.DisplayNameFor(model => model.Boss)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Place)
@@ -59,7 +59,7 @@
             @Html.DisplayFor(modelItem => item.Department.Name)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Employee2.Firstname)
+            @Html.DisplayFor(modelItem => item.Boss.Lastname)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Place.Place1)

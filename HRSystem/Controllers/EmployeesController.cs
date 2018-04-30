@@ -21,7 +21,13 @@ namespace HRSystem.Controllers
         // GET: Employees
         public ActionResult Index()
         {
-            return View(unitOfWork.Employees.GetAll());
+            var employees = unitOfWork.Employees.GetAll();
+            var employeesDto = new List<EmployeeDto>();
+            foreach(var employee in employees)
+            {
+                employeesDto.Add(converter.toDto(employee));
+            }
+            return View(employeesDto);
         }
 
         // GET: Employees/Details/5
@@ -32,11 +38,12 @@ namespace HRSystem.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Employee employee = unitOfWork.Employees.SingleOrDefault(e => e.EmployeeId == id);
+            var employeeDto = converter.toDto(employee);
             if (employee == null)
             {
                 return HttpNotFound();
             }
-            return View(employee);
+            return View(employeeDto);
         }
 
         // GET: Employees/Create
@@ -66,7 +73,7 @@ namespace HRSystem.Controllers
             }
 
             ViewBag.FkDepartment = new SelectList(unitOfWork.Departments.GetAll(), "DepartmentId", "Name");
-            ViewBag.FkBoss = new SelectList(unitOfWork.Employees.GetAll(), "EmployeeId", "Firstname");
+            ViewBag.FkBoss = new SelectList(unitOfWork.Employees.GetAll(), "EmployeeId", "Lastname");
             ViewBag.FkPlace = new SelectList(unitOfWork.Places.GetAll(), "PlaceId", "Place1");
             ViewBag.FkProject = new SelectList(unitOfWork.Projects.GetAll(), "ProjectId", "Name");
             return View(employeeDto);
@@ -80,13 +87,14 @@ namespace HRSystem.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Employee employee = unitOfWork.Employees.SingleOrDefault(e => e.EmployeeId == id);
-            EmployeeDto employeeDto = converter.toDto(employee);
             if (employee == null)
             {
                 return HttpNotFound();
             }
+            var employeeDto = converter.toDto(employee);
+
             ViewBag.FkDepartment = new SelectList(unitOfWork.Departments.GetAll(), "DepartmentId", "Name", employee.FkDepartment);
-            ViewBag.FkBoss = new SelectList(unitOfWork.Employees.GetAll(), "EmployeeId", "Firstname", employee.FkBoss);
+            ViewBag.FkBoss = new SelectList(unitOfWork.Employees.GetAll(), "EmployeeId", "Lastname", employee.FkBoss);
             ViewBag.FkPlace = new SelectList(unitOfWork.Places.GetAll(), "PlaceId", "Place1", employee.FkPlace);
             ViewBag.FkProject = new MultiSelectList(unitOfWork.Projects.GetAll(), "ProjectId", "Name", employeeDto.FkProject);
             return View(employeeDto);
@@ -108,7 +116,7 @@ namespace HRSystem.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.FkDepartment = new SelectList(unitOfWork.Departments.GetAll(), "DepartmentId", "Name", employeeDto.FkDepartment);
-            ViewBag.FkBoss = new SelectList(unitOfWork.Employees.GetAll(), "EmployeeId", "Firstname", employeeDto.FkBoss);
+            ViewBag.FkBoss = new SelectList(unitOfWork.Employees.GetAll(), "EmployeeId", "Lastname", employeeDto.FkBoss);
             ViewBag.FkPlace = new SelectList(unitOfWork.Places.GetAll(), "PlaceId", "Place1", employeeDto.FkPlace);
             ViewBag.FkProject = new SelectList(unitOfWork.Projects.GetAll(), "ProjectId", "Name");
             return View(employeeDto);
@@ -126,7 +134,8 @@ namespace HRSystem.Controllers
             {
                 return HttpNotFound();
             }
-            return View(employee);
+            var employeeDto = converter.toDto(employee);
+            return View(employeeDto);
         }
 
         // POST: Employees/Delete/5

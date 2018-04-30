@@ -1,4 +1,4 @@
-﻿@model HRSystem.Models.Employee
+﻿@model HRSystem.Models.Dto.EmployeeDto
 
 @{
     ViewBag.Title = "Delete";
@@ -60,11 +60,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Employee2.Firstname)
+            @Html.DisplayNameFor(model => model.Boss)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Employee2.Firstname)
+            @Html.DisplayFor(model => model.Boss.Lastname)
         </dd>
 
         <dt>
