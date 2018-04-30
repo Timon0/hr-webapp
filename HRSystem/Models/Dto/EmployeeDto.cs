@@ -15,15 +15,19 @@ namespace HRSystem.Models.Dto
         }
 
         public int EmployeeId { get; set; }
+        [Required]
         public string Firstname { get; set; }
+        [Required]
         public string Lastname { get; set; }
-
+        [Required]
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public System.DateTime Birthday { get; set; }
         public Nullable<int> Salary { get; set; }
         public string Address { get; set; }
+        [Required]
         public int FkDepartment { get; set; }
+        [Required]
         public int FkPlace { get; set; }
         public Nullable<int> FkBoss { get; set; }
         public ICollection<int> FkProject { get; set; }

@@ -14,6 +14,11 @@ namespace HRSystem.Converter
 
         }
 
+        /// <summary>
+        /// Convert Employee into EmployeeDto
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns>EmployeeDto to display on the view</returns>
         public Employee fromDto(EmployeeDto dto)
         {
             if(dto == null)
@@ -39,6 +44,11 @@ namespace HRSystem.Converter
             return employee;
         }
 
+        /// <summary>
+        /// Convert EmployeeDto into Employee
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns>Employee to write to database</returns>
         public EmployeeDto toDto(Employee entity)
         {
             if (entity == null)
