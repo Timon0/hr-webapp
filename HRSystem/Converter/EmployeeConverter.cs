@@ -61,6 +61,7 @@ namespace HRSystem.Converter
             dto.Boss = entity.Employee2;
             dto.Place = entity.Place;
             dto.Project = entity.Project;
+            dto.FkProject = entity.Project.Select(project => project.ProjectId).ToList();
             return dto;
         }
     }

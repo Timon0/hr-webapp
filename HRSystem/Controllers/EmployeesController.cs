@@ -45,6 +45,7 @@ namespace HRSystem.Controllers
             ViewBag.FkDepartment = new SelectList(unitOfWork.Departments.GetAll(), "DepartmentId", "Name");
             ViewBag.FkBoss = new SelectList(unitOfWork.Employees.GetAll(), "EmployeeId", "Lastname");
             ViewBag.FkPlace = new SelectList(unitOfWork.Places.GetAll(), "PlaceId", "Place1");
+            ViewBag.FkProject = new SelectList(unitOfWork.Projects.GetAll(), "ProjectId", "Name");
             return View();
         }
 
@@ -53,10 +54,12 @@ namespace HRSystem.Controllers
         // finden Sie unter https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "EmployeeId,Firstname,Lastname,Birthday,Salary,Address,FkDepartment,FkPlace,FkBoss")] Employee employee)
+        public ActionResult Create([Bind(Include = "EmployeeId,Firstname,Lastname,Birthday,Salary,Address,FkDepartment,FkPlace,FkBoss,FkProject")] EmployeeDto employeeDto)
         {
             if (ModelState.IsValid)
             {
+                employeeDto.Project = unitOfWork.Projects.GetAll();
+                var employee = converter.fromDto(employeeDto);
                 unitOfWork.Employees.Add(employee);
                 unitOfWork.Complete();
                 return RedirectToAction("Index");
@@ -65,7 +68,8 @@ namespace HRSystem.Controllers
             ViewBag.FkDepartment = new SelectList(unitOfWork.Departments.GetAll(), "DepartmentId", "Name");
             ViewBag.FkBoss = new SelectList(unitOfWork.Employees.GetAll(), "EmployeeId", "Firstname");
             ViewBag.FkPlace = new SelectList(unitOfWork.Places.GetAll(), "PlaceId", "Place1");
-            return View(employee);
+            ViewBag.FkProject = new SelectList(unitOfWork.Projects.GetAll(), "ProjectId", "Name");
+            return View(employeeDto);
         }
 
         // GET: Employees/Edit/5
@@ -84,7 +88,7 @@ namespace HRSystem.Controllers
             ViewBag.FkDepartment = new SelectList(unitOfWork.Departments.GetAll(), "DepartmentId", "Name", employee.FkDepartment);
             ViewBag.FkBoss = new SelectList(unitOfWork.Employees.GetAll(), "EmployeeId", "Firstname", employee.FkBoss);
             ViewBag.FkPlace = new SelectList(unitOfWork.Places.GetAll(), "PlaceId", "Place1", employee.FkPlace);
-            ViewBag.FkProject = new SelectList(unitOfWork.Projects.GetAll(), "ProjectId", "Name");
+            ViewBag.FkProject = new SelectList(unitOfWork.Projects.GetAll(), "ProjectId", "Name", employeeDto.FkProject);
             return View(employeeDto);
         }
 
