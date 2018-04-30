@@ -81,7 +81,7 @@ namespace HRSystem.Data.Repositories.Implementation
         {
             Context.Set<TEntity>().RemoveRange(entities);
         }
-        public void Update(TEntity entity)
+        public virtual void Update(TEntity entity)
         {
             Context.Set<TEntity>().Attach(entity);
             //IDbSet<TEntity> dbSet = Context.Set<TEntity>();

@@ -152,6 +152,7 @@
     <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PlacesController.cs" />
+    <Compile Include="Converter\EmployeeConverter.cs" />
     <Compile Include="Data\IUnitOfWork.cs" />
     <Compile Include="Data\Repositories\Implementation\DepartmentRepository.cs" />
     <Compile Include="Data\Repositories\Implementation\EmployeeRepository.cs" />
@@ -196,6 +197,7 @@
     <Compile Include="Models\Project.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Dto\EmployeeDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

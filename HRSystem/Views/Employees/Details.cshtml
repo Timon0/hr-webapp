@@ -74,6 +74,17 @@
             @Html.DisplayFor(model => model.Place.Place1)
         </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.Project)
+        </dt>
+
+        <dd>
+            @foreach(var item in Model.Project)
+            {
+                @item.Name;
+                <br />
+            }
+        </dd>
     </dl>
 </div>
 <p>

@@ -8,12 +8,15 @@ using System.Web;
 using System.Web.Mvc;
 using HRSystem.Models;
 using HRSystem.Data;
+using HRSystem.Models.Dto;
+using HRSystem.Converter;
 
 namespace HRSystem.Controllers
 {
     public class EmployeesController : Controller
     {
         private UnitOfWork unitOfWork = new UnitOfWork(new HRSystemEntities());
+        private EmployeeConverter converter = new EmployeeConverter();
 
         // GET: Employees
         public ActionResult Index()
@@ -73,6 +76,7 @@ namespace HRSystem.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Employee employee = unitOfWork.Employees.SingleOrDefault(e => e.EmployeeId == id);
+            EmployeeDto employeeDto = converter.toDto(employee);
             if (employee == null)
             {
                 return HttpNotFound();
@@ -80,8 +84,8 @@ namespace HRSystem.Controllers
             ViewBag.FkDepartment = new SelectList(unitOfWork.Departments.GetAll(), "DepartmentId", "Name", employee.FkDepartment);
             ViewBag.FkBoss = new SelectList(unitOfWork.Employees.GetAll(), "EmployeeId", "Firstname", employee.FkBoss);
             ViewBag.FkPlace = new SelectList(unitOfWork.Places.GetAll(), "PlaceId", "Place1", employee.FkPlace);
-            ViewBag.FkProjects = unitOfWork.Projects.GetAll();
-            return View(employee);
+            ViewBag.FkProject = new SelectList(unitOfWork.Projects.GetAll(), "ProjectId", "Name");
+            return View(employeeDto);
         }
 
         // POST: Employees/Edit/5
@@ -89,19 +93,21 @@ namespace HRSystem.Controllers
         // finden Sie unter https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "EmployeeId,Firstname,Lastname,Birthday,Salary,Address,FkDepartment,FkPlace,FkBoss")] Employee employee)
+        public ActionResult Edit([Bind(Include = "EmployeeId,Firstname,Lastname,Birthday,Salary,Address,FkDepartment,FkPlace,FkBoss,FkProject,Project")] EmployeeDto employeeDto)
         {
             if (ModelState.IsValid)
             {
+                employeeDto.Project = unitOfWork.Projects.GetAll();
+                var employee = converter.fromDto(employeeDto);
                 unitOfWork.Employees.Update(employee);
                 unitOfWork.Complete();
                 return RedirectToAction("Index");
             }
-            ViewBag.FkDepartment = new SelectList(unitOfWork.Departments.GetAll(), "DepartmentId", "Name", employee.FkDepartment);
-            ViewBag.FkBoss = new SelectList(unitOfWork.Employees.GetAll(), "EmployeeId", "Firstname", employee.FkBoss);
-            ViewBag.FkPlace = new SelectList(unitOfWork.Places.GetAll(), "PlaceId", "Place1", employee.FkPlace);
-            ViewBag.FkProjects = unitOfWork.Projects.GetAll();
-            return View(employee);
+            ViewBag.FkDepartment = new SelectList(unitOfWork.Departments.GetAll(), "DepartmentId", "Name", employeeDto.FkDepartment);
+            ViewBag.FkBoss = new SelectList(unitOfWork.Employees.GetAll(), "EmployeeId", "Firstname", employeeDto.FkBoss);
+            ViewBag.FkPlace = new SelectList(unitOfWork.Places.GetAll(), "PlaceId", "Place1", employeeDto.FkPlace);
+            ViewBag.FkProject = new SelectList(unitOfWork.Projects.GetAll(), "ProjectId", "Name");
+            return View(employeeDto);
         }
 
         // GET: Employees/Delete/5
