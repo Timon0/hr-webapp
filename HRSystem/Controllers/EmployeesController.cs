@@ -88,7 +88,7 @@ namespace HRSystem.Controllers
             ViewBag.FkDepartment = new SelectList(unitOfWork.Departments.GetAll(), "DepartmentId", "Name", employee.FkDepartment);
             ViewBag.FkBoss = new SelectList(unitOfWork.Employees.GetAll(), "EmployeeId", "Firstname", employee.FkBoss);
             ViewBag.FkPlace = new SelectList(unitOfWork.Places.GetAll(), "PlaceId", "Place1", employee.FkPlace);
-            ViewBag.FkProject = new SelectList(unitOfWork.Projects.GetAll(), "ProjectId", "Name", employeeDto.FkProject);
+            ViewBag.FkProject = new MultiSelectList(unitOfWork.Projects.GetAll(), "ProjectId", "Name", employeeDto.FkProject);
             return View(employeeDto);
         }
 
