@@ -26,9 +26,9 @@ namespace HRSystem.Models.Dto
         public Nullable<int> Salary { get; set; }
         public string Address { get; set; }
         [Required]
-        public int FkDepartment { get; set; }
+        public Nullable<int> FkDepartment { get; set; }
         [Required]
-        public int FkPlace { get; set; }
+        public Nullable<int> FkPlace { get; set; }
         public Nullable<int> FkBoss { get; set; }
         public ICollection<int> FkProject { get; set; }
 
