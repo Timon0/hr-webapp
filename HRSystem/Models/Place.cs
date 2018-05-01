@@ -23,6 +23,7 @@ namespace HRSystem.Models
     
         public int PlaceId { get; set; }
         [Required]
+        [Range(1000, 9999)]
         public int PostalCode { get; set; }
         [Required]
         [Display(Name = "Place")]
