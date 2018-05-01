@@ -143,6 +143,12 @@ namespace HRSystem.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            if(unitOfWork.Employees.SingleOrDefault(e => e.Employee2.EmployeeId == id) != null)
+            {
+                ViewBag.Message = "You can't delete this employee because it is still referenced by other employees. Please clean those references first.";
+                return Delete(id);
+            }
+
             Employee employee = unitOfWork.Employees.SingleOrDefault(e => e.EmployeeId == id);
             unitOfWork.Employees.Remove(employee);
             unitOfWork.Complete();
